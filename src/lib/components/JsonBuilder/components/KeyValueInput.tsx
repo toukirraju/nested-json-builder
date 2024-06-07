@@ -7,8 +7,8 @@ const KeyValueInput = () => {
   const [key, setKey] = useState("");
   const [value, setValue] = useState("");
   return (
-    <div className="w-[600px] h-16 flex py-1 px-3 items-center shadow-md rounded-lg bg-slate-600 text-white justify-between">
-      <div className="flex items-center gap-2 font-bold">
+    <div className="min-w-[320px] flex flex-col gap-3 p-3 items-center shadow-md rounded-bl-lg rounded-br-lg bg-slate-600 text-white justify-between">
+      <div className="flex w-full justify-between items-center gap-2 font-bold">
         <label htmlFor="key">Key</label>
         <input
           className="py-1 px-2 outline-none rounded-md border-4 border-gray-300 bg-transparent"
@@ -18,7 +18,7 @@ const KeyValueInput = () => {
           onChange={(e) => setKey(e.target.value)}
         />
       </div>
-      <div className="flex items-center gap-2 font-bold">
+      <div className="flex w-full justify-between items-center gap-2 font-bold">
         <label htmlFor="value">Value</label>
         <input
           className="py-1 px-2 outline-none rounded-md border-4 border-gray-300 bg-transparent"
@@ -37,7 +37,7 @@ const KeyValueInput = () => {
             payload: { key, value, parent: selectedParent },
           });
         }}
-        className="py-2 px-4 bg-yellow-600 text-white font-bold hover:bg-yellow-700 rounded-md ml-2"
+        className="py-2 px-4 bg-yellow-600 text-white font-bold hover:bg-yellow-700 rounded-md ml-2 disabled:bg-slate-400 disabled:cursor-not-allowed"
       >
         ADD
       </button>

@@ -5,14 +5,14 @@ const ParentSelector = () => {
   const { state, dispatch } = useContext(BuilderContext);
   const { parentNodes } = state || {};
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     dispatch({
       type: "SELECTED_PARENT",
       payload: e.target.value,
     });
   };
   return (
-    <div className="min-w-[300px] flex py-3 px-3 items-center shadow-md rounded-lg bg-slate-600 text-white justify-center">
+    <div className="min-w-[320px] flex py-3 px-3 items-center shadow-md rounded-bl-lg rounded-br-lg bg-slate-600 text-white justify-center">
       <div className="w-full flex flex-col items-center   gap-2 font-bold">
         <label htmlFor="parentName">Parent Selector</label>
         <select

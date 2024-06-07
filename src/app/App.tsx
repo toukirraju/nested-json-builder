@@ -4,10 +4,7 @@ import GeneratePreset from "../lib/components/generate-presets/GeneratePreset";
 
 function App() {
   return (
-    <div className="flex justify-center items-center flex-col">
-      <Button label="hellow" />
-      <GeneratePreset />
-
+    <div className=" ">
       <JsonBuilder />
     </div>
   );

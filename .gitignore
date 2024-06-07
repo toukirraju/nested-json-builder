@@ -17,6 +17,7 @@ dist-ssr
 .yarn/*
 yarn.lock
 .yarnrc.yml
+.pnp.*
 package-lock.json
 !.vscode/extensions.json
 .idea
