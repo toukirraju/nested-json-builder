@@ -1,4 +1,4 @@
-import JsonBuilder from "../lib/components/JsonBuilder";
+import { JsonBuilder } from "../lib";
 
 function App() {
   const handleJsonChange = (json: any) => {

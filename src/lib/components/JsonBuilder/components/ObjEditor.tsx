@@ -19,7 +19,7 @@ const ObjEditor = () => {
         There is no data for edit
       </h1>
       <p className="text-sm font-bold text-gray-500">
-        Please create json from left panel
+        Please create json from builder
       </p>
     </div>
   );
