@@ -5,12 +5,20 @@ import ParentName from "./components/ParentName";
 import ParentSelector from "./components/ParentSelector";
 import arrayToObject from "./utils/arrayToObject";
 import Header from "./components/Header";
-import NestedObjectRenderer from "./components/NestedObjectRenderer";
-import ReactJson from "react-json-view";
 import { TiExport } from "react-icons/ti";
 import { RiImportFill } from "react-icons/ri";
-import { FaRegCopy } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
+import { MdOutlineFindInPage } from "react-icons/md";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BuilderProps } from ".";
+import ObjEditor from "./components/ObjEditor";
+import ObjPreviewer from "./components/ObjPreviewer";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTrigger,
+} from "../Dialog/Dialog";
 
 const Builder: React.FC<BuilderProps> = ({ initJson, onChange }) => {
   const { state, dispatch } = useContext(BuilderContext);
@@ -20,23 +28,6 @@ const Builder: React.FC<BuilderProps> = ({ initJson, onChange }) => {
   const { selectedParent, baseArray } = state || {};
 
   const generatedObject = arrayToObject(baseArray);
-
-  //copy json to clipboard
-  const handleCopy = async () => {
-    try {
-      if (preview === "array") {
-        await navigator.clipboard.writeText(JSON.stringify(baseArray, null, 2));
-      } else {
-        await navigator.clipboard.writeText(
-          JSON.stringify(generatedObject, null, 2)
-        );
-      }
-
-      alert("Copied to clipboard!");
-    } catch (err) {
-      alert("Failed to copy!");
-    }
-  };
 
   // Import JSON file and set to state
   const handleImport = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,9 +78,9 @@ const Builder: React.FC<BuilderProps> = ({ initJson, onChange }) => {
   }, [generatedObject]);
 
   return (
-    <div className="flex h-full w-full  gap-2">
+    <div className="flex flex-col md:flex-row h-screen overflow-hidden md:h-full w-full gap-2 ">
       {/* object maker */}
-      <div className="bg-gray-200 w-1/2 pt-10 flex flex-col items-center space-y-10">
+      <div className="md:bg-gray-200 w-full  md:w-1/2 pt-4 md:pt-10 flex flex-col items-center space-y-2 md:space-y-10">
         <h1 className="text-2xl font-bold">JSON Builder</h1>
         <div className="flex items-center gap-2 text-[20px]">
           {/* import  */}
@@ -127,52 +118,45 @@ const Builder: React.FC<BuilderProps> = ({ initJson, onChange }) => {
         </div>
       </div>
 
-      {/* object editor */}
-      {arrayToObject(baseArray) &&
-      Object.keys(arrayToObject(baseArray) || {}).length > 0 ? (
-        <div className="bg-gray-200 w-full h-screen overflow-auto">
-          <NestedObjectRenderer data={arrayToObject(baseArray)} key="root" />
-        </div>
-      ) : (
-        <div className="bg-gray-200 w-full h-screen overflow-auto flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold text-gray-500">
-            There is no data for edit
-          </h1>
-          <p className="text-sm font-bold text-gray-500">
-            Please create json from left panel
-          </p>
-        </div>
-      )}
+      <div className="w-full hidden md:block">
+        {/* object editor */}
+        <ObjEditor />
+      </div>
 
       {/* object preview */}
-      <div className="relative bg-gray-200 w-full  ">
-        <div className="absolute  top-2 right-2 flex items-center gap-2 z-10">
-          <FaRegCopy
-            onClick={handleCopy}
-            className="font-bold h-6 w-6 text-teal-800  hover:text-teal-600 cursor-pointer "
-          />
+      <div className="relative bg-gray-200 w-full   md:block ">
+        <ObjPreviewer preview={preview} setPreview={setPreview} />
+      </div>
 
-          <button
-            onClick={() => setPreview("object")}
-            className={`py-1 px-3 border-2 ${preview === "object" && "bg-teal-600 text-white"} border-teal-600 hover:bg-teal-600 hover:text-white rounded-md`}
-          >
-            Object
-          </button>
+      {/* mobile view */}
 
-          <button
-            onClick={() => setPreview("array")}
-            className={`py-1 px-3 border-2 ${preview === "array" && "bg-teal-600 text-white"} border-teal-600 hover:bg-teal-600 hover:text-white rounded-md`}
-          >
-            Array
-          </button>
-        </div>
-        <div className="h-screen overflow-auto">
-          <ReactJson
-            enableClipboard={false}
-            displayDataTypes={false}
-            src={preview === "array" ? state.baseArray : generatedObject || {}}
-          />
-        </div>
+      <div className="absolute  bottom-4 right-4 flex md:hidden gap-2">
+        {/* editor  */}
+        <Dialog>
+          <DialogTrigger className="h-9 w-9 border-2 text-teal-700 hover:bg-teal-600 hover:text-white border-teal-600 rounded-full flex justify-center items-center">
+            {/* icon  */}
+            <FiEdit className="text-inherit " />
+          </DialogTrigger>
+          <DialogContent className="bg-slate-400 w-full relative">
+            <ObjEditor />
+            <DialogClose className="absolute bottom-4 right-4">
+              <AiOutlineCloseCircle className="h-6 w-6 text-red-400 hover:text-red-500" />
+            </DialogClose>
+          </DialogContent>
+        </Dialog>
+        {/* preview  */}
+        {/* <Dialog>
+          <DialogTrigger className="h-9 w-9 border-2 text-teal-700 hover:bg-teal-600 hover:text-white border-teal-600 rounded-full flex justify-center items-center">
+            
+            <MdOutlineFindInPage className="text-inherit " />
+          </DialogTrigger>
+          <DialogContent className="bg-slate-400 w-full relative">
+            <ObjPreviewer preview={preview} setPreview={setPreview} />
+            <DialogClose className="absolute bottom-4 right-4">
+              <AiOutlineCloseCircle className="h-6 w-6 text-red-400 hover:text-red-500" />
+            </DialogClose>
+          </DialogContent>
+        </Dialog> */}
       </div>
     </div>
   );

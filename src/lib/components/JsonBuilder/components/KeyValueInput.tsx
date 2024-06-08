@@ -7,7 +7,7 @@ const KeyValueInput = () => {
   const [key, setKey] = useState("");
   const [value, setValue] = useState("");
   return (
-    <div className="min-w-[320px] flex flex-col gap-3 p-3 items-center shadow-md rounded-bl-lg rounded-br-lg bg-slate-600 text-white justify-between">
+    <div className="min-w-[320px] flex flex-col gap-3 p-3 items-center shadow-md rounded-bl-lg rounded-br-lg bg-teal-600 text-white justify-between">
       <div className="flex w-full justify-between items-center gap-2 font-bold">
         <label htmlFor="key">Key</label>
         <input

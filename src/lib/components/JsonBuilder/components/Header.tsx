@@ -6,7 +6,7 @@ const Header = () => {
 
   const { selectedParent, isObject } = state || {};
   return (
-    <div className="min-w-[320px] flex justify-between items-center bg-gray-300 shadow-md rounded-tl-md rounded-tr-md py-2 px-3 gap-4">
+    <div className="min-w-[320px] flex justify-between items-center bg-teal-500/10 shadow-md rounded-tl-lg rounded-tr-lg py-2 px-3 gap-4">
       <div className="flex flex-col gap-2 text-sm font-bold text-black   items-center">
         <span className="text-gray-600">Selected Node </span>
         <div className="text-orange-500 relative ">

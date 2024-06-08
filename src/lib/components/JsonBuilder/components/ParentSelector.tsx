@@ -12,7 +12,7 @@ const ParentSelector = () => {
     });
   };
   return (
-    <div className="min-w-[320px] flex py-3 px-3 items-center shadow-md rounded-bl-lg rounded-br-lg bg-slate-600 text-white justify-center">
+    <div className="min-w-[320px] flex py-3 px-3 items-center shadow-md rounded-bl-lg rounded-br-lg bg-teal-600 text-white justify-center">
       <div className="w-full flex flex-col items-center   gap-2 font-bold">
         <label htmlFor="parentName">Parent Selector</label>
         <select

@@ -49,7 +49,7 @@ function NestedObjectRenderer({ data, title }: NestedObjectRendererProps) {
       <h3
         onMouseOver={() => setIsParentHovered(true)}
         onMouseOut={() => setIsParentHovered(false)}
-        className="flex items-center gap-2 font-bold bg-gradient-to-r from-indigo-500  text-white px-3 rounded-md "
+        className="flex items-center gap-2 font-bold bg-gradient-to-r from-teal-600  text-white px-3 rounded-md "
       >
         {title}
         {isParentHovered && (

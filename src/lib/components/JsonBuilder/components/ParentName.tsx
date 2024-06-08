@@ -5,7 +5,7 @@ const ParentName = () => {
   const { dispatch } = useContext(BuilderContext);
   const [parentName, setParentName] = useState("");
   return (
-    <div className="flex flex-col gap-3 p-3 items-center shadow-md rounded-bl-lg rounded-br-lg bg-slate-600 text-white justify-between">
+    <div className="flex flex-col gap-3 p-3 items-center shadow-md rounded-bl-lg rounded-br-lg bg-teal-600 text-white justify-between">
       <div className="flex w-full justify-between items-center gap-2 font-bold">
         <label htmlFor="parentName">Parent Name</label>
         <input
