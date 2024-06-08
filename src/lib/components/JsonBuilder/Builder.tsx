@@ -7,12 +7,12 @@ import arrayToObject from "./utils/arrayToObject";
 import Header from "./components/Header";
 import NestedObjectRenderer from "./components/NestedObjectRenderer";
 import ReactJson from "react-json-view";
-import { IoArrowUndo } from "react-icons/io5";
 import { TiExport } from "react-icons/ti";
 import { RiImportFill } from "react-icons/ri";
 import { FaRegCopy } from "react-icons/fa";
+import { BuilderProps } from ".";
 
-const Builder = () => {
+const Builder: React.FC<BuilderProps> = ({ initJson, onChange }) => {
   const { state, dispatch } = useContext(BuilderContext);
 
   const [preview, setPreview] = useState("object");
@@ -48,7 +48,6 @@ const Builder = () => {
       const text = event.target?.result as string;
       try {
         const obj = JSON.parse(text);
-        console.log(obj);
         dispatch({ type: "IMPORT_JSON", payload: obj });
         alert("File imported successfully!");
       } catch (error) {
@@ -74,6 +73,18 @@ const Builder = () => {
     link.click();
     document.body.removeChild(link);
   };
+
+  // set initial json data to state
+  React.useEffect(() => {
+    if (!initJson) return;
+    dispatch({ type: "IMPORT_JSON", payload: initJson });
+  }, [initJson]);
+
+  // pass json data to parent component
+  React.useEffect(() => {
+    if (!generatedObject) return;
+    generatedObject && onChange && onChange(generatedObject);
+  }, [generatedObject]);
 
   return (
     <div className="flex h-full w-full  gap-2">

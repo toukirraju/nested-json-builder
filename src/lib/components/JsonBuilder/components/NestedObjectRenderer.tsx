@@ -3,6 +3,7 @@ import { AiFillCheckCircle, AiFillEdit } from "react-icons/ai";
 import { PiTrashSimpleDuotone } from "react-icons/pi";
 import { Popover, PopoverContent, PopoverTrigger } from "../../Popover/Popover";
 import { BuilderContext } from "../context/BuilderProvider";
+import isValidColor from "../utils/isValidColor";
 
 type NestedObjectRendererProps = {
   data: any;
@@ -127,6 +128,9 @@ function Item({ title, itemKey, value }: ItemProps) {
       payload: { previousValues, updatedValues },
     });
   };
+
+  const bgColor = isValidColor(value) ? value : "transparent";
+
   return (
     <div
       className="item flex items-center gap-2"
@@ -134,7 +138,16 @@ function Item({ title, itemKey, value }: ItemProps) {
       onMouseOut={() => setKeyValueHovered(false)}
     >
       <div>
-        <span>{itemKey}</span> : <span>{value}</span>
+        <span>{itemKey}</span> :{" "}
+        <span>
+          {isValidColor(value) && (
+            <span
+              className="py-0 rounded-md px-2 mr-1"
+              style={{ backgroundColor: bgColor }}
+            />
+          )}
+          {value}
+        </span>
       </div>
       {keyValueHovered && (
         <div className="flex items-center gap-3">

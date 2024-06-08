@@ -1,11 +1,12 @@
-import { Button } from "../lib";
 import JsonBuilder from "../lib/components/JsonBuilder";
-import GeneratePreset from "../lib/components/generate-presets/GeneratePreset";
 
 function App() {
+  const handleJsonChange = (json: any) => {
+    console.log(json);
+  };
   return (
     <div className=" ">
-      <JsonBuilder />
+      <JsonBuilder onChange={handleJsonChange} />
     </div>
   );
 }

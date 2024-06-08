@@ -336,7 +336,7 @@ const reducer = (state: State, action: Action): State => {
       // update children parentName
       children.forEach((child: string) => {
         const childIndex = updatedBaseArray.findIndex(
-          (item: any) => item.name === child
+          (item: any) => item.name === child && item.parentName === previousName
         );
 
         updatedBaseArray[childIndex] = {
