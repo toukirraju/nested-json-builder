@@ -14,6 +14,8 @@ import {
   FloatingPortal,
   FloatingFocusManager,
   useId,
+  FloatingArrow,
+  arrow,
 } from "@floating-ui/react";
 
 interface PopoverOptions {
@@ -22,6 +24,8 @@ interface PopoverOptions {
   modal?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  arrowFill?: string;
+  indicatorArrow?: boolean;
 }
 
 export function usePopover({
@@ -30,7 +34,10 @@ export function usePopover({
   modal,
   open: controlledOpen,
   onOpenChange: setControlledOpen,
+  arrowFill,
+  indicatorArrow,
 }: PopoverOptions = {}) {
+  const arrowRef = React.useRef(null);
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(initialOpen);
   const [labelId, setLabelId] = React.useState<string | undefined>();
   const [descriptionId, setDescriptionId] = React.useState<
@@ -53,6 +60,9 @@ export function usePopover({
         padding: 5,
       }),
       shift({ padding: 5 }),
+      arrow({
+        element: arrowRef,
+      }),
     ],
   });
 
@@ -77,8 +87,26 @@ export function usePopover({
       descriptionId,
       setLabelId,
       setDescriptionId,
+      arrowRef, // Make sure arrowRef is included in the returned object
+      arrowFill,
+      indicatorArrow,
+      onOpenChange: setOpen,
+      events: context.events,
+      dataRef: context.dataRef,
+      nodeId: context.nodeId,
+      floatingId: context.floatingId,
     }),
-    [open, setOpen, interactions, data, modal, labelId, descriptionId]
+    [
+      open,
+      setOpen,
+      interactions,
+      data,
+      modal,
+      labelId,
+      descriptionId,
+      arrowFill,
+      indicatorArrow,
+    ]
   );
 }
 
@@ -163,7 +191,13 @@ export const PopoverContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLProps<HTMLDivElement>
 >(function PopoverContent({ style, ...props }, propRef) {
-  const { context: floatingContext, ...context } = usePopoverContext();
+  const {
+    context: floatingContext,
+    arrowRef,
+    arrowFill,
+    indicatorArrow,
+    ...context
+  } = usePopoverContext();
   const ref = useMergeRefs([context.refs.setFloating, propRef]);
 
   if (!floatingContext.open) return null;
@@ -178,6 +212,16 @@ export const PopoverContent = React.forwardRef<
           aria-describedby={context.descriptionId}
           {...context.getFloatingProps(props)}
         >
+          {
+            // If the user wants to show the arrow, we render it here
+            indicatorArrow && (
+              <FloatingArrow
+                ref={arrowRef}
+                context={context}
+                fill={arrowFill || "white"}
+              />
+            )
+          }
           {props.children}
         </div>
       </FloatingFocusManager>
